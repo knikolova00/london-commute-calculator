@@ -7,10 +7,25 @@ load_dotenv()
 api_key = os.getenv('BING_API_KEY')
 
 
+def getLatLng(address, api_key):
+    endpoint = 'https://dev.virtualearth.net/REST/v1/Locations'
+    params = {
+        'query': address,
+        'key': api_key
+    }
+    response = requests.get(endpoint, params=params)
+    data = response.json()
+
+    if data['statusCode'] == 200 and data['resourceSets'] and data['resourceSets'][0]['resources']:
+        coordinates = data['resourceSets'][0]['resources'][0]['point']['coordinates']
+        return tuple(coordinates)
+    else:
+        print('Error: No results found')
+        return None
+
+
 def commuteCalculator(origin, destination, api_key):
 
-    # url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={origin}&destinations={destination}&key={api_key}'
-    # url = f'https://api.distancematrix.ai/distancematrix?origins={origin}&destinations={destination}&transit_mode=rail&key={api_key}'
     url = 'https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix'
     querystring = {
         'origins': f'{origin}',
