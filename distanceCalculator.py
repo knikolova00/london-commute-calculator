@@ -26,24 +26,25 @@ def getLatLng(address, api_key):
         return None
 
 
-def commuteCalculator(originCoords, destinationCoords, api_key):
+def commuteCalculator(originCoords, destinationCoords):
 
     base_url = "https://api.tfl.gov.uk/Journey/JourneyResults/"
     url = f"{base_url}{originCoords[0]},{originCoords[1]}/to/{destinationCoords[0]},{destinationCoords[1]}"
 
     params = {
-        'mode': 'tube,public-bus,dlr,overground,train,tram,dlr',
+        'mode': 'tube,dlr,overground,tram,dlr',
         'app_key': tfl_primary_key
     }
 
     response = requests.get(url, params=params)
     data = response.json()
+    print(data)
 
     if 'journeys' in data and len(data['journeys']) > 0:
         journey = data['journeys'][0]
-        return journey['duration']
+        print(f"Duration: {journey['duration']} minutes")
     else:
-        return None
+        print('Error: No results found')
 
     # # Data
     # origin = 'Westminster Abbey,London SW1P 3PA,United Kingdom'
@@ -53,9 +54,13 @@ def commuteCalculator(originCoords, destinationCoords, api_key):
 def client():
     origin = input('Where are you?(<street,postcode,country>): ')
     destinations = [
-        'Baker Street Station,London NW1 5LA,United Kingdom;Turnham Green Station,London W4 1LR,United Kingdom']
-    result = getLatLng(origin, api_key)
+        'Baker Street Station,London NW1 5LA,United Kingdom']
+    # Turnham Green Station,London W4 1LR,United Kingdom
+    originCoords = getLatLng(origin, api_key)
+    destinationCoords = getLatLng(destinations[0], api_key)
+    result = commuteCalculator(originCoords, destinationCoords)
     print(result)
+
     # result = commuteCalculator(origin, destinations, api_key)
     # print(result)
 
