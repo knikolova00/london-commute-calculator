@@ -5,6 +5,8 @@ import os
 load_dotenv()
 
 api_key = os.getenv('BING_API_KEY')
+tfl_primary_key = os.getenv('TFL_PRIM_KEY')
+tfl_secondary_key = os.getenv('TFL_SEC_KEY')
 
 
 def getLatLng(address, api_key):
@@ -60,10 +62,10 @@ def client():
     origin = input('Where are you?(<street,postcode,country>): ')
     destinations = [
         'Baker Street Station,London NW1 5LA,United Kingdom;Turnham Green Station,London W4 1LR,United Kingdom']
-    # destination = input('Where do you want to go?: ')
-    # get api from .env
-    result = commuteCalculator(origin, destinations, api_key)
+    result = getLatLng(origin, api_key)
     print(result)
+    # result = commuteCalculator(origin, destinations, api_key)
+    # print(result)
 
 # Write result to a txt file
 
