@@ -4,6 +4,7 @@ import os
 
 load_dotenv()
 
+# API Keys are kept private in a .env file
 api_key = os.getenv('BING_API_KEY')
 tfl_primary_key = os.getenv('TFL_PRIM_KEY')
 tfl_secondary_key = os.getenv('TFL_SEC_KEY')
