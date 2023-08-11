@@ -8,6 +8,11 @@ api_key = os.getenv('BING_API_KEY')
 tfl_primary_key = os.getenv('TFL_PRIM_KEY')
 tfl_secondary_key = os.getenv('TFL_SEC_KEY')
 
+destinations = [
+    'Baker Street Station,London NW1 5LA,United Kingdom', 'Oxford Street,London W1D 1BS,United Kingdom',
+    'Harbour Exchange Square, London E14 9GE, United Kingdom', 'Hommerton Hospital, London E9 6SR, United Kingdom',
+    'Goldsmiths University, London, UK']
+
 
 def getLatLng(address, api_key):
     endpoint = 'https://dev.virtualearth.net/REST/v1/Locations'
@@ -38,11 +43,11 @@ def commuteCalculator(originCoords, destinationCoords):
 
     response = requests.get(url, params=params)
     data = response.json()
-    print(data)
 
     if 'journeys' in data and len(data['journeys']) > 0:
         journey = data['journeys'][0]
-        print(f"Duration: {journey['duration']} minutes")
+        print(
+            f"{journey['duration']} minutes to get to {destinations[0]}")
     else:
         print('Error: No results found')
 
@@ -53,16 +58,11 @@ def commuteCalculator(originCoords, destinationCoords):
 
 def client():
     origin = input('Where are you?(<street,postcode,country>): ')
-    destinations = [
-        'Baker Street Station,London NW1 5LA,United Kingdom']
     # Turnham Green Station,London W4 1LR,United Kingdom
     originCoords = getLatLng(origin, api_key)
     destinationCoords = getLatLng(destinations[0], api_key)
-    result = commuteCalculator(originCoords, destinationCoords)
-    print(result)
+    commuteCalculator(originCoords, destinationCoords)
 
-    # result = commuteCalculator(origin, destinations, api_key)
-    # print(result)
 
 # Write result to a txt file
 
