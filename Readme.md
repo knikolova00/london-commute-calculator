@@ -15,3 +15,8 @@ I made this while flat hunting in London to help me quickly obtain commute times
 ```BING_API_KEY = '<your bing api key>'```
 ```TFL_API_KEY = '<your tfl api key>'```
 7. Run the program with ```python commuteCalculator.py```
+
+## Future Improvements
+- A GUI could be added to make the app more user friendly.
+- The app could be extended to take in a list of locations and return commute times between all of them and a given location.
+- You could also read destinations from a text file or another API rather than have them hard coded in the program.
